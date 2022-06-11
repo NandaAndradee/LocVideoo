@@ -80,15 +80,14 @@ namespace LocVideo.Infrastructure
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-
                 var query = "SELECT Clients.idClient AS IdClient, Clients.name AS Name, Clients.email AS Email, Clients.document AS Document, Clients.birthdate AS Birthdate, Clients.phone AS Phone FROM Clients WHERE Clients.email=@Email ";
                 connection.Open();
                 var parameters = new DynamicParameters();
 
                 parameters.Add("@Email", email, DbType.String);
 
-                var okUser = await connection.QueryAsync<ClientEmailCPFDto>(query, parameters);
-                var validClient = okUser.FirstOrDefault();
+                var okClient = await connection.QueryAsync<ClientEmailCPFDto>(query, parameters);
+                var validClient = okClient.FirstOrDefault();
                 if (validClient == null)
                     return null;
 
